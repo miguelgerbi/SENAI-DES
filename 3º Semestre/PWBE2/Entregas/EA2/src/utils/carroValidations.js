@@ -1,21 +1,19 @@
 function validatePlaca(placa) {
-  if (!placa) {
-    const error = new Error("Placa é obrigatória.");
-    error.status = 400;
-    throw error;
-  }
+    if (!placa) {
+        throwError("Placa é obrigatória.");
+    }
 
-  const cleaned = placa.trim().toUpperCase();
+    const cleaned = placa.trim().toUpperCase();
 
-  if (cleaned.includes(" ")) {
-    throwError("Placa não pode conter espaços.");
-  }
+    if (cleaned.includes(" ")) {
+        throwError("Placa não pode conter espaços.");
+    }
 
-  if (cleaned.length !== 7) {
-    throwError("Placa deve ter 7 caracteres.");
-  }
+    if (cleaned.length !== 7) {
+        throwError("Placa deve ter 7 caracteres.");
+    }
 
-  return cleaned;
+    return cleaned;
 }
 
 function formatarNome(value) {
@@ -34,27 +32,27 @@ function formatarNome(value) {
 }
 
 function validateAno(ano) {
-  if (!ano || ano.length !== 4) {
-    throwError("Ano deve ter 4 dígitos.");
-  }
+    if (!ano || (ano+"").length !== 4) {
+        throwError("Ano deve ter 4 dígitos.");
+    }
 
-  const contemLetras = ano
-    .split("")
-    .some(char => isNaN(char));
+    const hasLetter = (ano+"")
+        .split("")
+        .some(char => isNaN(char));
 
-  if (contemLetras) {
-    throwError("Ano deve conter apenas números.");
-  }
+    if (hasLetter) {
+        throwError("Ano deve conter apenas números.");
+    }
 }
 
-function throwError(mensagem) {
-  const error = new Error(mensagem);
-  error.status = 400;
-  throw error;
+function throwError(message) {
+    const error = new Error(message);
+    error.status = 400;
+    throw error;
 }
 
 module.exports = {
     validatePlaca,
     formatarNome,
     validateAno
-}
+};

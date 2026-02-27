@@ -2,11 +2,18 @@ const prisma = require("../data/prisma");
 const carroService = require("../services/carroService");
 
 const createCarro = async (req, res) => {
-    const dados = req.body;
+    try {
+        const dados = req.body;
+        
+        const carro = await carroService.create(dados);
 
-    const carro = await carroService.create(dados);
+        return res.status(201).json(carro);
 
-    res.json(carro).end();
+    } catch (error) {
+        return res.status(error.status || 500).json({
+            message: error.message
+        });
+    }
 }
 
 const readCarros = async (req, res) => {
@@ -19,7 +26,7 @@ const readCarro = async (req, res) => {
     const { id } = req.params;
     
     const carro = await prisma.carros.findUnique({
-        where: { id }
+        where: { id: Number(id) }
     })
 
     res.json(carro).status(200).end();
@@ -30,7 +37,7 @@ const updateCarro = async (req, res) => {
     const dados = req.body;
     
     const carro = await prisma.carros.update({
-        where: { id },
+        where: { id: Number(id) },
         data: dados
     })
     
@@ -41,7 +48,7 @@ const deleteCarro = async (req, res) => {
     const { id } = req.params;
 
     const carro = await prisma.carros.delete({
-        where: { id }
+        where: { id: Number(id) }
     })
 
     res.json(carro).status(200).end();

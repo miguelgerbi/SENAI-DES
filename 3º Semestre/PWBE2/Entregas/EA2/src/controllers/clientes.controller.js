@@ -1,14 +1,19 @@
 const prisma = require("../data/prisma");
 const clienteService = require("../services/clienteService");
 
-const createCliente = async (req, res) => {
-    const dados = req.body;
+async function createCliente(req, res) {
+    try {
+        const dados = req.body;
 
-    const cliente = await clienteService.create({
-        data: dados
-    });
+        const cliente = await clienteService.create(dados);
 
-    res.json(cliente).status(201).end();
+        return res.status(201).json(cliente);
+
+    } catch (error) {
+        return res.status(error.status || 500).json({
+        message: error.message
+        });
+    }
 }
 
 const readClientes = async (req, res) => {
@@ -21,7 +26,7 @@ const readCliente = async (req, res) => {
     const { id } = req.params;
     
     const cliente = await prisma.clientes.findUnique({
-        where: { id }
+        where: { id: Number(id) }
     })
 
     res.json(cliente).status(200).end();
@@ -32,7 +37,7 @@ const updateCliente = async (req, res) => {
     const dados = req.body;
     
     const cliente = await prisma.clientes.update({
-        where: { id },
+        where: { id: Number(id) },
         data: dados
     })
     
@@ -43,7 +48,7 @@ const deleteCliente = async (req, res) => {
     const { id } = req.params;
 
     const cliente = await prisma.clientes.delete({
-        where: { id }
+        where: { id: Number(id) }
     })
 
     res.json(cliente).status(200).end();

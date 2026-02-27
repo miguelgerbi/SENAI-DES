@@ -24,6 +24,6 @@ model Clientes {
   id    Int    @id @default(autoincrement())
   nome  String
   cpf   String
-  email String
+  email String @unique
   cnh   String
 }

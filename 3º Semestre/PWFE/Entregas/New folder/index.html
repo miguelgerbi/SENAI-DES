@@ -7,23 +7,13 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<header>
-		<h1>Loja - Cadastro de Cliente</h1>
-		<button onclick="abrirModal()">+ Novo Cliente</button>
-	</header>
 	<main>
-		<table>
-			<thead>
-				<tr>
-					<th>CPF</th>
-					<th>Nome</th>
-					<th>Sobrenome</th>
-					<th>Nascimento</th>
-					<th>Ações</th>
-				</tr>
-			</thead>
-			<tbody id="dados"></tbody>
-		</table>
+    <div>
+      <form action="/buscar" method="get">
+        <input type="text" name="q" placeholder="Pesquisar...">
+        <button type="submit">Buscar</button>
+      </form>
+    </div>
 	</main>
 	<!--Criar Modal-->
 	<div id="modalCli" class="modal">
